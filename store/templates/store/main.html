@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
     <script type="text/javascript">
+
         var user = '{{ request.user }}'
 
         function getToken(name){
@@ -26,12 +27,43 @@
             return cookieValue;
         }
         var csrftoken = getToken('csrftoken');
+
+        function getCookie(name){
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(",");
+
+            //l Loop through the array elements
+            for (var i = i; i < cookieArr.length; i++){
+                var cookiePair = cookieArr[i].split("=");
+
+                /* Removing whitepace at the beginning of the cookie name
+                and compare it with the given and return */
+
+                if (name == cookiePair[0].trim()){
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[i]);
+                }
+            }
+
+            // Return null if not found
+            return null;
+        }
+
+        var cart = JSON.parse(getCookie('cart'))
+        if (cart == undefined){
+            cart = {}
+            console.log('Cart was created!')
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart:', cart)
+
     </script>
 
     <title>ecommerce</title>
 </head>
 <body>
     {% include 'store/navbar.html' %}
+
     <div class="container my-4">
         {% block content %}{% endblock %}
     </div>
