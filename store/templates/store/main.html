@@ -30,10 +30,10 @@
 
         function getCookie(name){
             // Split cookie string and get all individual name=value pairs in an array
-            var cookieArr = document.cookie.split(",");
+            var cookieArr = document.cookie.split(";");
 
             //l Loop through the array elements
-            for (var i = i; i < cookieArr.length; i++){
+            for (var i = 0; i < cookieArr.length; i++){
                 var cookiePair = cookieArr[i].split("=");
 
                 /* Removing whitepace at the beginning of the cookie name
@@ -41,7 +41,7 @@
 
                 if (name == cookiePair[0].trim()){
                     // Decode the cookie value and return
-                    return decodeURIComponent(cookiePair[i]);
+                    return decodeURIComponent(cookiePair[1]);
                 }
             }
 
@@ -52,7 +52,7 @@
         var cart = JSON.parse(getCookie('cart'))
         if (cart == undefined){
             cart = {}
-            console.log('Cart was created!')
+            console.log('Cart was created!', cart)
             document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
         }
         console.log('Cart:', cart)
